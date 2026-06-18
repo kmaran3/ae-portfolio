@@ -1,0 +1,50 @@
+version: 2
+
+models:
+  - name: fct_orders
+    description: >
+      Order-level fact table. One row per order with status, revenue, 
+      and customer info. Primary table for revenue and order volume analysis.
+    columns:
+      - name: order_id
+        description: "Primary key."
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        tests:
+          - not_null
+
+  - name: dim_customers
+    description: >
+      Customer dimension with lifetime value, order counts, and segment.
+      Join to fct_orders on customer_id for customer-level analysis.
+    columns:
+      - name: customer_id
+        description: "Primary key."
+        tests:
+          - unique
+          - not_null
+      - name: customer_segment
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['loyal', 'repeat', 'one_time', 'no_orders']
+
+  - name: fct_order_items_enriched
+    description: >
+      Product-level fact table. One row per order line item, enriched with
+      product and order details. Use for product performance and category analysis.
+    columns:
+      - name: order_item_id
+        description: "Primary key."
+        tests:
+          - unique
+          - not_null
+      - name: order_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('fct_orders')
+                field: order_id

@@ -1,0 +1,22 @@
+# dbt
+jaffle_shop/target/
+jaffle_shop/dbt_packages/
+jaffle_shop/logs/
+*.log
+
+# Credentials
+gcp_key.json
+.env
+
+# Python
+__pycache__/
+*.pyc
+.DS_Store
+
+# Large data files
+jaffle-data/raw_order_items.csv
+jaffle-data/raw_orders.csv
+
+# Logs
+logs/
+EOF

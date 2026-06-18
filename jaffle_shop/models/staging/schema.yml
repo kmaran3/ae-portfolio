@@ -1,0 +1,59 @@
+version: 2
+
+models:
+  - name: stg_customers
+    description: "One record per customer. Cleaned and renamed from raw_customers."
+    columns:
+      - name: customer_id
+        description: "Primary key — unique identifier for each customer."
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_orders
+    description: "One record per order. Amounts converted from cents to dollars."
+    columns:
+      - name: order_id
+        description: "Primary key — unique identifier for each order."
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: "Foreign key to stg_customers."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_customers')
+                field: customer_id
+
+  - name: stg_order_items
+    description: "One record per line item within an order."
+    columns:
+      - name: order_item_id
+        tests:
+          - unique
+          - not_null
+      - name: order_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_orders')
+                field: order_id
+
+  - name: stg_products
+    description: "Product catalog with prices converted to dollars."
+    columns:
+      - name: product_id
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_stores
+    description: "Store locations and open dates."
+    columns:
+      - name: store_id
+        tests:
+          - unique
+          - not_null

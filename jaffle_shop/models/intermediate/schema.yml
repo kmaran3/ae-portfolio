@@ -1,0 +1,8 @@
+version: 2
+
+models:
+  - name: int_orders_with_customers
+    description: "Orders joined with customer info. Used as the base for core mart models."
+
+  - name: int_order_items_with_products
+    description: "Order line items joined with product details. Used for product-level analysis."

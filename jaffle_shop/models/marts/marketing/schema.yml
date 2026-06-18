@@ -1,0 +1,19 @@
+version: 2
+
+models:
+  - name: fct_customer_cohorts
+    description: >
+      Monthly cohort retention table. For each signup cohort, shows how many 
+      customers placed orders at 0, 1, 2... months after signup. 
+      Use to build a retention heatmap in Looker Studio.
+    columns:
+      - name: cohort_month
+        description: "The month the cohort of customers signed up (YYYY-MM)."
+        tests:
+          - not_null
+      - name: months_since_signup
+        description: "Number of months after signup when orders were placed."
+        tests:
+          - not_null
+      - name: retention_rate_pct
+        description: "Percentage of cohort that placed an order in this month."

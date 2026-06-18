@@ -1,0 +1,28 @@
+version: 2
+
+sources:
+  - name: raw
+    database: krishna-ae-portfolio
+    schema: raw
+    description: "Raw tables loaded directly from jafgen CSV exports into BigQuery."
+
+    tables:
+      - name: raw_customers
+        description: "Raw customer records from jafgen."
+      - name: raw_orders
+        description: "Raw order transactions."
+        config:
+          loaded_at_field: ordered_at
+          freshness:
+            warn_after: {count: 24, period: hour}
+            error_after: {count: 48, period: hour}
+      - name: raw_order_items
+        description: "Raw line items — one row per product per order."
+      - name: raw_products
+        description: "Raw product catalog."
+      - name: raw_stores
+        description: "Raw store locations."
+      - name: raw_supplies
+        description: "Raw supplies"
+      - name: raw_tweets
+        description: "Raw tweets with content"

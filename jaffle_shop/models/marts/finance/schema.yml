@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: fct_revenue_daily
+    description: >
+      Daily revenue aggregated by store for completed orders only.
+      Primary table for revenue trend and store performance analysis.
+      Surrogate key generated from order_date + store_id.
+    columns:
+      - name: revenue_daily_id
+        description: "Surrogate primary key — generated from order_date + store_id."
+        tests:
+          - unique
+          - not_null
+      - name: order_date
+        tests:
+          - not_null
+      - name: store_id
+        tests:
+          - not_null
